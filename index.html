@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SW Builds & Plumbing — Expert Plumbing, Refurbishments & Extensions in London</title>
+  <meta name="description" content="SW Builds & Plumbing — Specialists in plumbing, bathroom & kitchen refurbishments, loft conversions, and home extensions. 25+ years experience. Gas Safe registered. 24/7 emergency service." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0c2340;
+      --navy-light: #163a5f;
+      --orange: #e8712b;
+      --orange-hover: #d4621f;
+      --red: #dc2626;
+      --red-hover: #b91c1c;
+      --cream: #faf8f5;
+      --warm-gray: #f1ede8;
+      --text: #1a1a1a;
+      --text-secondary: #555;
+      --border: #e0dbd4;
+      --white: #ffffff;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--cream);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ─── Top Bar ─── */
+    .top-bar {
+      background: var(--navy);
+      color: rgba(255,255,255,0.85);
+      font-size: 0.8rem;
+      padding: 0.5rem 0;
+      letter-spacing: 0.03em;
+    }
+    .top-bar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .top-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-weight: 400;
+    }
+    .top-bar-left span { opacity: 0.7; }
+    .top-bar-badges {
+      display: none;
+      gap: 1rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+    }
+    .top-bar-badges span {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .emergency-btn {
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: var(--red);
+      padding: 0.45rem 1rem;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+      color: white;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .emergency-btn:hover {
+      background: var(--red-hover);
+      transform: scale(1.03);
+    }
+
+    /* ─── Header ─── */
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .logo img {
+      height: 4.5rem;
+      width: auto;
+      object-fit: contain;
+    }
+    .logo-text {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+    .logo-text small {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+    nav { display: none; }
+    nav a {
+      margin-left: 2rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+      position: relative;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--orange);
+      transition: width 0.3s;
+    }
+    nav a:hover { color: var(--navy); }
+    nav a:hover::after { width: 100%; }
+
+    .header-phone {
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--navy);
+      padding: 0.5rem 1.2rem;
+      border: 2px solid var(--navy);
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .header-phone:hover {
+      background: var(--navy);
+      color: white;
+    }
+
+    /* Mobile toggle */
+    .mobile-toggle {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .mobile-toggle span {
+      width: 24px;
+      height: 2px;
+      background: var(--navy);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      padding: 1rem 0 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .mobile-nav.active { display: flex; }
+    .mobile-nav a {
+      padding: 0.75rem 0;
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 500;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-nav a:last-child { border-bottom: none; }
+
+    /* ─── Hero ─── */
+    .hero {
+      background: var(--navy);
+      color: white;
+      padding: 4rem 0 3.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(232,113,43,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(232,113,43,0.4), transparent);
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: blink 2s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      max-width: 700px;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--orange);
+    }
+    .hero-text {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      max-width: 580px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 0.85rem 2rem;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s;
+      text-decoration: none;
+    }
+    .btn-orange {
+      background: var(--orange);
+      color: white;
+    }
+    .btn-orange:hover {
+      background: var(--orange-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(232,113,43,0.35);
+    }
+    .btn-outline {
+      background: transparent;
+      color: white;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+    .btn-outline:hover {
+      border-color: white;
+      background: rgba(255,255,255,0.05);
+    }
+    .btn-red {
+      background: var(--red);
+      color: white;
+    }
+    .btn-red:hover {
+      background: var(--red-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(220,38,38,0.35);
+    }
+
+    /* Hero trust strip */
+    .hero-trust {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .trust-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .trust-label {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.3;
+    }
+    .trust-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    /* ─── Sections ─── */
+    .section { padding: 4rem 0; }
+    .section-header {
+      margin-bottom: 2.5rem;
+    }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--orange);
+      margin-bottom: 0.75rem;
+    }
+    .section-header h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--navy);
+      margin-bottom: 0.75rem;
+    }
+    .section-header p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 600px;
+    }
+
+    /* ─── Credentials Bar ─── */
+    .creds-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+    .creds-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+    .cred-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem;
+      background: var(--cream);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .cred-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: var(--navy);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .cred-text {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.3;
+    }
+    .cred-text small {
+      display: block;
+      font-weight: 400;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      margin-top: 2px;
+    }
+
+    /* ─── About ─── */
+    .about-section { background: var(--white); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .about-text p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .stat-card {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      background: var(--cream);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      color: var(--orange);
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 0.25rem;
+    }
+
+    /* ─── Services ─── */
+    .services-section { background: var(--cream); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .service-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 1.75rem;
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+      display: block;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 0;
+      background: var(--orange);
+      transition: height 0.3s;
+      border-radius: 0 0 4px 0;
+    }
+    .service-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(12,35,64,0.08);
+      border-color: transparent;
+    }
+    .service-card:hover::before { height: 100%; }
+    .service-card .service-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+    .service-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+    .service-card p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .service-card .arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--orange);
+      margin-top: 1rem;
+      transition: gap 0.2s;
+    }
+    .service-card:hover .arrow { gap: 0.6rem; }
+
+    /* ─── Why Choose Us ─── */
+    .why-section { background: var(--white); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    .feature-card {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 1.5rem;
+      background: var(--cream);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .feature-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--navy);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .feature-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 0.35rem;
+    }
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ─── Testimonials ─── */
+    .testimonials-section {
+      background: var(--navy);
+      color: white;
+    }
+    .testimonials-section .section-label { color: var(--orange); }
+    .testimonials-section .section-header h2 { color: white; }
+    .testimonials-section .section-header p { color: rgba(255,255,255,0.6); }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    .testimonial-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 1.75rem;
+    }
+    .testimonial-stars {
+      color: #fbbf24;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+    }
+    .testimonial-text {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+      font-style: italic;
+    }
+    .testimonial-author {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: white;
+    }
+    .testimonial-location {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.45);
+      margin-top: 0.2rem;
+    }
+
+    /* ─── CTA Band ─── */
+    .cta-band {
+      background: var(--orange);
+      padding: 3rem 0;
+      text-align: center;
+      color: white;
+    }
+    .cta-band h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+    .cta-band p {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 1.5rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-band .btn-dark {
+      background: var(--navy);
+      color: white;
+    }
+    .cta-band .btn-dark:hover {
+      background: var(--navy-light);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(12,35,64,0.3);
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      background: #091a30;
+      color: rgba(255,255,255,0.7);
+      padding: 3.5rem 0 1.5rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+    .footer-brand .logo-text {
+      color: white;
+      font-size: 1.1rem;
+    }
+    .footer-brand p {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      margin-top: 0.75rem;
+      color: rgba(255,255,255,0.5);
+    }
+    .footer-col h4 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: white;
+      margin-bottom: 1rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 0.5rem; }
+    .footer-col a {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.5);
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--orange); }
+    .footer-col li:not(:has(a)) {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.5);
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* ─── Responsive ─── */
+    @media (min-width: 768px) {
+      .top-bar-badges { display: flex; }
+      nav { display: block; }
+      .mobile-toggle { display: none; }
+      .header-phone { display: flex; }
+      .logo img { height: 6rem; }
+      .logo-text { font-size: 1.3rem; }
+
+      .hero { padding: 5.5rem 0 4.5rem; }
+      .hero h1 { font-size: 3.5rem; }
+      .hero-trust { grid-template-columns: repeat(4, 1fr); }
+
+      .creds-grid { grid-template-columns: repeat(4, 1fr); }
+      .stats-row { grid-template-columns: repeat(4, 1fr); }
+      .services-grid { grid-template-columns: repeat(3, 1fr); }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .testimonials-grid { grid-template-columns: repeat(3, 1fr); }
+      .footer-grid { grid-template-columns: 1.5fr 1fr 1fr 1fr; }
+
+      .section { padding: 5rem 0; }
+      .section-header h2 { font-size: 2.4rem; }
+      .cta-band h2 { font-size: 2.4rem; }
+    }
+
+    @media (min-width: 1024px) {
+      .hero h1 { font-size: 4rem; }
+      .services-grid { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    }
+
+    /* ─── Contact Form ─── */
+    .contact-section { background: var(--white); }
+
+    /* ─── Trusted Platforms ─── */
+    .trusted-platforms-section { background: var(--warm-gray); }
+
+    .platforms-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .platform-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+
+    .platform-card:hover {
+      border-color: var(--orange);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+
+    .platform-logo-wrap {
+      flex-shrink: 0;
+      width: 110px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+    }
+
+    .platform-logo-wrap svg { width: 100%; height: 100%; }
+
+    .platform-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .platform-info strong {
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .platform-info span {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .platform-arrow {
+      font-size: 1.2rem;
+      color: var(--orange);
+      flex-shrink: 0;
+    }
+
+    @media (min-width: 768px) {
+      .platforms-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    .contact-info-block h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+    .contact-info-block p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.75rem;
+    }
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .contact-detail-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+    .contact-detail-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: var(--navy);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .contact-detail-item strong {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      margin-bottom: 1px;
+    }
+    .quote-form-card {
+      background: var(--cream);
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid var(--border);
+    }
+    .quote-form-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--navy);
+      margin-bottom: 0.4rem;
+    }
+    .quote-form-card p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .form-group label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--text);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(12,35,64,0.07);
+    }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+    }
+    .form-success .check {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #22c55e;
+      color: white;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+    .form-success h4 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+    .form-success p { font-size: 0.95rem; color: var(--text-secondary); }
+
+    @media (min-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr 1.4fr; }
+      .form-row { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ─── Scroll Animations ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-left">
+        <span>24/7 Emergency Service&ensp;•&ensp;Same Rates 7 Days a Week</span>
+        <div class="top-bar-badges">
+          <span>✓ Gas Safe Registered</span>
+          <span>✓ NICEIC Certified</span>
+          <span>✓ Fully Insured</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="SW Builds & Plumbing" />
+        <div class="logo-text">
+          SW Builds &amp; Plumbing
+          
+        </div>
+      </a>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#projects">Reviews</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a href="tel:02034883752" class="header-phone">📞 020 3488 3752</a>
+      <button class="mobile-toggle" id="mobileMenuToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="container">
+      <nav class="mobile-nav" id="mobileNav">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#projects">Reviews</a>
+        <a href="#contact">Contact</a>
+        <a href="tel:02034883752" style="color:var(--red);font-weight:700;">📞 020 3488 3752</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-badge"><span class="dot"></span> 24/7 Emergency Callouts</div>
+      <h1>Expert Plumbing, Refurbishments &amp; <em>Home&nbsp;Extensions</em></h1>
+      <p class="hero-text">
+        Over 25 years transforming London homes. From emergency plumbing repairs to complete
+        loft conversions and extensions — quality craftsmanship you can trust.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-orange">Get a Free Quote</a>
+        <a href="tel:02034883752" class="btn btn-red">📞 Call Now</a>
+        <a href="#services" class="btn btn-outline">Our Services →</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item">
+          <div class="trust-icon">🏆</div>
+          <div>
+            <div class="trust-value">25+ Years</div>
+            <div class="trust-label">Industry experience</div>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">📋</div>
+          <div>
+            <div class="trust-value">5,000+</div>
+            <div class="trust-label">Projects completed</div>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">⭐</div>
+          <div>
+            <div class="trust-value">98%</div>
+            <div class="trust-label">Client satisfaction</div>
+          </div>
+        </div>
+        <div class="trust-item">
+          <div class="trust-icon">🔒</div>
+          <div>
+            <div class="trust-value">Gas Safe</div>
+            <div class="trust-label">Registered &amp; insured</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Credentials -->
+  <section class="creds-bar">
+    <div class="container">
+      <div class="creds-grid">
+        <div class="cred-item">
+          <div class="cred-icon">🔥</div>
+          <div class="cred-text">Gas Safe Registered<small>Licensed gas engineers</small></div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-icon">⚡</div>
+          <div class="cred-text">NICEIC Certified<small>Approved electricians</small></div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-icon">🛡️</div>
+          <div class="cred-text">CHAS Accredited<small>Health &amp; safety</small></div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-icon">✓</div>
+          <div class="cred-text">Fully Insured<small>Complete cover</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section about-section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text fade-up">
+          <div class="section-header">
+            <div class="section-label">About Us</div>
+            <h2>London's Trusted Builders &amp; Plumbers Since 1999</h2>
+          </div>
+          <p>
+            Founded in 1999, SW Builds &amp; Plumbing specialises in plumbing services, bathroom
+            and kitchen refurbishments, loft conversions, and home extensions. We combine traditional
+            craftsmanship with modern techniques to deliver exceptional results for every project.
+          </p>
+          <p>
+            Our team of qualified plumbers, builders, and specialists brings decades of combined
+            experience to transform your home. Whether you need emergency plumbing repairs, a complete
+            bathroom makeover, a modern kitchen refurbishment, a loft conversion to add space, or a
+            home extension — we're committed to quality, reliability, and your complete satisfaction.
+          </p>
+          <div class="stats-row">
+            <div class="stat-card">
+              <span class="stat-number">25+</span>
+              <span class="stat-label">Years Experience</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">5,000+</span>
+              <span class="stat-label">Projects Completed</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">98%</span>
+              <span class="stat-label">Client Satisfaction</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">24/7</span>
+              <span class="stat-label">Emergency Service</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section services-section" id="services">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="section-label">What We Do</div>
+        <h2>Our Services</h2>
+        <p>Specialist services in plumbing, refurbishments, conversions, and extensions — all under one roof.</p>
+      </div>
+      <div class="services-grid">
+        <a href="plumbing-services.html" class="service-card fade-up">
+          <div class="service-icon">🔧</div>
+          <h3>Plumbing Services</h3>
+          <p>Complete plumbing solutions: installations, repairs, maintenance, and 24/7 emergency callouts. Expert workmanship for leaks, blockages, boiler repairs, and new installations.</p>
+          <span class="arrow">Learn more →</span>
+        </a>
+        <a href="bathroom-refurb.html" class="service-card fade-up">
+          <div class="service-icon">🚿</div>
+          <h3>Bathroom Refurbishments</h3>
+          <p>Complete bathroom transformations from design to completion. Full refurbishments including tiling, plumbing, electrical work, and finishing touches.</p>
+          <span class="arrow">Learn more →</span>
+        </a>
+        <a href="kitchen-refurb.html" class="service-card fade-up">
+          <div class="service-icon">🍳</div>
+          <h3>Kitchen Refurbishments</h3>
+          <p>Complete kitchen makeovers including design, installation, plumbing, electrical work, and finishing. Transform your kitchen into a modern, functional space.</p>
+          <span class="arrow">Learn more →</span>
+        </a>
+        <a href="loft-conversions.html" class="service-card fade-up">
+          <div class="service-icon">🏠</div>
+          <h3>Loft Conversions</h3>
+          <p>Maximise your home's potential with a professional loft conversion. From planning and building regulations to construction and finishing.</p>
+          <span class="arrow">Learn more →</span>
+        </a>
+        <a href="home-extensions.html" class="service-card fade-up">
+          <div class="service-icon">🏗️</div>
+          <h3>Home Extensions</h3>
+          <p>Single and double-storey extensions to expand your living space. Full project management from planning permission to completion.</p>
+          <span class="arrow">Learn more →</span>
+        </a>
+        <a href="#contact" class="service-card fade-up">
+          <div class="service-icon">🔥</div>
+          <h3>Heating &amp; Boiler Services</h3>
+          <p>Boiler installation, servicing, and repairs. Central heating design and installation. Gas Safe registered engineers for all your heating needs.</p>
+          <span class="arrow">Get a quote →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section class="section why-section">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="section-label">Why SW Builds</div>
+        <h2>Why Choose Us</h2>
+        <p>Decades of expertise, certified professionals, and a commitment to getting it right first time.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card fade-up">
+          <div class="feature-num">01</div>
+          <div>
+            <h3>25+ Years of Experience</h3>
+            <p>Established in 1999, we bring decades of expertise to every project. Our proven track record speaks for itself.</p>
+          </div>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="feature-num">02</div>
+          <div>
+            <h3>Fully Certified &amp; Insured</h3>
+            <p>Gas Safe registered, NICEIC certified, CHAS accredited, and fully insured. All work to industry standards.</p>
+          </div>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="feature-num">03</div>
+          <div>
+            <h3>Quality Craftsmanship</h3>
+            <p>Every project completed to the highest standards with attention to detail and quality materials throughout.</p>
+          </div>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="feature-num">04</div>
+          <div>
+            <h3>Transparent Pricing</h3>
+            <p>Clear, detailed quotes with no hidden costs. Honest pricing and work within agreed budgets every time.</p>
+          </div>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="feature-num">05</div>
+          <div>
+            <h3>Comprehensive Guarantees</h3>
+            <p>All our work comes with comprehensive guarantees. We stand behind our craftsmanship and fix any issues promptly.</p>
+          </div>
+        </div>
+        <div class="feature-card fade-up">
+          <div class="feature-num">06</div>
+          <div>
+            <h3>Complete Project Management</h3>
+            <p>From initial consultation to final handover, we manage every aspect of your project for a stress-free experience.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section testimonials-section" id="projects">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="section-label">Client Reviews</div>
+        <h2>What Our Clients Say</h2>
+        <p>Trusted by homeowners across London. Here's what they say about working with us.</p>
+      </div>
+      <div class="testimonials-grid">
+        <article class="testimonial-card fade-up">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">
+            "SW Builds &amp; Plumbing completed a full bathroom refurbishment for us. The quality was exceptional and the team was professional throughout. They kept us informed at every stage and finished on time and on budget."
+          </p>
+          <div class="testimonial-author">Charlie</div>
+          <div class="testimonial-location">Fulham, SW6 — Bathroom Refurbishment</div>
+        </article>
+        <article class="testimonial-card fade-up">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">
+            "We've used SW Builds &amp; Plumbing for multiple projects — from emergency plumbing repairs to a complete kitchen refurbishment and loft conversion. Reliable, professional, and consistently excellent."
+          </p>
+          <div class="testimonial-author">Matthew</div>
+          <div class="testimonial-location">Wandsworth, SW18 — Kitchen Refurb &amp; Loft Conversion</div>
+        </article>
+        <article class="testimonial-card fade-up">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">
+            "We chose SW Builds &amp; Plumbing for our home extension and they exceeded all expectations. From planning permission to completion, their project management was outstanding."
+          </p>
+          <div class="testimonial-author">Grace</div>
+          <div class="testimonial-location">Clapham, SW4 — Home Extension</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Band -->
+  <section class="cta-band">
+    <div class="container">
+      <h2>Ready to Start Your Project?</h2>
+      <p>Get in touch today for a free, no-obligation quote. We'll get back to you within 24 hours.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="#contact" class="btn btn-dark">Get a Free Quote</a>
+        <a href="tel:02034883752" class="btn" style="background:rgba(0,0,0,0.2);color:white;">📞 020 3488 3752</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trade Directory Links -->
+  <section class="section trusted-platforms-section">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="section-label">Verified &amp; Trusted</div>
+        <h2>Find Us On</h2>
+        <p>Read genuine reviews and check our credentials across the UK's leading trade directories.</p>
+      </div>
+      <div class="platforms-grid fade-up">
+
+        <a href="https://www.checkatrade.com/trades/swbuildsandplumbing" target="_blank" rel="noopener" class="platform-card">
+          <div class="platform-logo-wrap checkatrade-logo" style="width:120px;height:36px;">
+            <img src="checkatrade-logo.svg" alt="Checkatrade" style="width:100%;height:100%;object-fit:contain;"/>
+          </div>
+          <div class="platform-info">
+            <strong>Checkatrade</strong>
+            <span>View our profile &amp; reviews</span>
+          </div>
+          <div class="platform-arrow">→</div>
+        </a>
+
+        <a href="https://www.bark.com/en/gb/b/sw-builds-amp-plumbing/J3YjeR/" target="_blank" rel="noopener" class="platform-card">
+          <div class="platform-logo-wrap bark-logo" style="width:100px;height:36px;">
+            <svg viewBox="0 0 160 56" xmlns="http://www.w3.org/2000/svg" aria-label="Bark" style="width:100%;height:100%;">
+              <!-- Megaphone / signal icon: 3 radiating lines from a point -->
+              <line x1="28" y1="28" x2="6"  y2="14" stroke="#1a2050" stroke-width="6" stroke-linecap="round"/>
+              <line x1="28" y1="28" x2="2"  y2="28" stroke="#1a2050" stroke-width="6" stroke-linecap="round"/>
+              <line x1="28" y1="28" x2="6"  y2="42" stroke="#1a2050" stroke-width="6" stroke-linecap="round"/>
+              <!-- "bark" wordmark -->
+              <text x="40" y="40" font-family="'Arial Black',Arial,sans-serif" font-weight="900" font-size="32" fill="#1a2050" letter-spacing="-1">bark</text>
+            </svg>
+          </div>
+          <div class="platform-info">
+            <strong>Bark</strong>
+            <span>View our profile &amp; reviews</span>
+          </div>
+          <div class="platform-arrow">→</div>
+        </a>
+
+        <a href="https://www.mybuilder.com/profile/available_plumbers" target="_blank" rel="noopener" class="platform-card">
+          <div class="platform-logo-wrap mybuilder-logo" style="width:44px;height:44px;">
+            <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" aria-label="MyBuilder" style="width:44px;height:44px;">
+              <circle cx="22" cy="22" r="22" fill="#6abf00"/>
+              <!-- Hammer head -->
+              <rect x="11" y="10" width="22" height="10" rx="2.5" fill="#1c1c3a"/>
+              <!-- Hammer handle -->
+              <rect x="19.5" y="19" width="5" height="17" rx="2" transform="rotate(10 22 27)" fill="#1c1c3a"/>
+            </svg>
+          </div>
+          <div class="platform-info">
+            <strong>MyBuilder</strong>
+            <span>View our profile &amp; reviews</span>
+          </div>
+          <div class="platform-arrow">→</div>
+        </a>
+
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact / Quote Form -->
+  <section class="section contact-section" id="contact">
+    <div class="container">
+      <div class="section-header fade-up">
+        <div class="section-label">Get In Touch</div>
+        <h2>Request a Free Quote</h2>
+        <p>Fill in the form and we'll get back to you within 24 hours. Or call us directly for immediate help.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info-block fade-up">
+          <h3>We'd Love to Hear From You</h3>
+          <p>Whether you have a small repair or a large project in mind, our team is ready to help. Get in touch for honest advice and a free, no-obligation quote.</p>
+          <div class="contact-details">
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon">📞</div>
+              <div>
+                <strong>Phone</strong>
+                <a href="tel:02034883752" style="color:var(--navy);font-weight:600;">020 3488 3752</a>
+              </div>
+            </div>
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon">✉️</div>
+              <div>
+                <strong>Email</strong>
+                <a href="mailto:office@swbuildsandplumbing.co.uk" style="color:var(--navy);font-weight:600;">office@swbuildsandplumbing.co.uk</a>
+              </div>
+            </div>
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon">⚡</div>
+              <div>
+                <strong>Emergency</strong>
+                <span style="font-weight:600;color:var(--red);">24/7 Available</span>
+              </div>
+            </div>
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon">🕐</div>
+              <div>
+                <strong>Office Hours</strong>
+                <span>Mon–Fri 8am–6pm</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="quote-form-card fade-up">
+          <h3>Free Quote Request</h3>
+          <p>We'll respond within 24 hours — usually much sooner.</p>
+          <form id="quoteForm" action="https://formspree.io/f/mkoqkvbd" method="POST">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="e.g. John Smith" required />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="e.g. 07700 900000" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" required />
+              </div>
+              <div class="form-group">
+                <label for="service">Service Required</label>
+                <select id="service" name="service" required>
+                  <option value="">Select a service…</option>
+                  <option value="plumbing">Plumbing Services</option>
+                  <option value="bathroom">Bathroom Refurbishment</option>
+                  <option value="kitchen">Kitchen Refurbishment</option>
+                  <option value="loft">Loft Conversion</option>
+                  <option value="extension">Home Extension</option>
+                  <option value="heating">Heating &amp; Boiler</option>
+                  <option value="emergency">Emergency Plumbing</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom:1.25rem;">
+              <label for="message">Tell Us About Your Project</label>
+              <textarea id="message" name="message" placeholder="Brief description of the work needed, any timescales, or questions you have…"></textarea>
+            </div>
+            <button type="submit" class="btn btn-orange" style="width:100%;justify-content:center;font-size:1rem;padding:1rem;">
+              Send Quote Request →
+            </button>
+          </form>
+          <div class="form-success" id="formSuccess">
+            <div class="check">✓</div>
+            <h4>Message Sent!</h4>
+            <p>Thanks for getting in touch. We'll be back to you within 24 hours.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-text" style="font-family:var(--font-display);">SW Builds &amp; Plumbing</div>
+          <p>Expert plumbing, refurbishments, loft conversions, and home extensions. Serving London and the surrounding areas since 1999.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="plumbing-services.html">Plumbing Services</a></li>
+            <li><a href="bathroom-refurb.html">Bathroom Refurbishments</a></li>
+            <li><a href="kitchen-refurb.html">Kitchen Refurbishments</a></li>
+            <li><a href="loft-conversions.html">Loft Conversions</a></li>
+            <li><a href="home-extensions.html">Home Extensions</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#projects">Client Reviews</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact Us</h4>
+          <ul>
+            <li><strong style="color:rgba(255,255,255,0.7);">Phone:</strong> 020 3488 3752</li>
+            <li><strong style="color:rgba(255,255,255,0.7);">Email:</strong> office@swbuildsandplumbing.co.uk</li>
+            <li><strong style="color:rgba(255,255,255,0.7);">Emergency:</strong> 24/7 Available</li>
+            <li><strong style="color:rgba(255,255,255,0.7);">Hours:</strong> Mon–Fri 8am–6pm</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2025 SW Builds &amp; Plumbing. All rights reserved. &ensp;|&ensp; Established 1999 &ensp;|&ensp; Gas Safe Registered &ensp;|&ensp; NICEIC Certified
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu
+    const toggle = document.getElementById('mobileMenuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    if (toggle && mobileNav) {
+      toggle.addEventListener('click', () => mobileNav.classList.toggle('active'));
+    }
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        const t = document.querySelector(this.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (mobileNav) mobileNav.classList.remove('active');
+      });
+    });
+
+    // Quote form
+    const quoteForm = document.getElementById('quoteForm');
+    const formSuccess = document.getElementById('formSuccess');
+    if (quoteForm) {
+      quoteForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const btn = quoteForm.querySelector('button[type="submit"]');
+        btn.textContent = 'Sending…';
+        btn.disabled = true;
+        try {
+          const res = await fetch(quoteForm.action, {
+            method: 'POST',
+            body: new FormData(quoteForm),
+            headers: { 'Accept': 'application/json' }
+          });
+          if (res.ok) {
+            quoteForm.style.display = 'none';
+            formSuccess.style.display = 'block';
+          } else {
+            btn.textContent = 'Send Quote Request →';
+            btn.disabled = false;
+            alert('Something went wrong. Please call us on 020 3488 3752.');
+          }
+        } catch {
+          btn.textContent = 'Send Quote Request →';
+          btn.disabled = false;
+          alert('Something went wrong. Please call us on 020 3488 3752.');
+        }
+      });
+    }
+
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
